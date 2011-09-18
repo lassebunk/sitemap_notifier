@@ -11,10 +11,10 @@ In Rails 3:
 
 Start by generating initializer and route:
 
-  $ rails generate sitemap_notifier notifier
+  $ rails generate sitemap_notifier sitemap_notifier
 
 
-In <code>config/initializers/notifier.rb</code>:
+In <code>config/initializers/sitemap_notifier.rb</code>:
 
   # wait 10 minutes between notifications
   SitemapNotifier::Notifier.delay = 600
