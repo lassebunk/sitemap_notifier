@@ -16,8 +16,12 @@ Start by generating initializer and route:
 
 In <code>config/initializers/notifier.rb</code>:
 
+  # wait 10 minutes between notifications
   SitemapNotifier::Notifier.delay = 600
+
+  # replace this with your own url
   SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
+
 
 == After installation
 
