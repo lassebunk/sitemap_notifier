@@ -1,3 +1,6 @@
+# enabled in which environments
+SitemapNotifier::Notifier.environments = [:development, :test, :production]
+
 # wait 10 minutes between notifications
 SitemapNotifier::Notifier.delay = 600
 
