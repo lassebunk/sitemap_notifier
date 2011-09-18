@@ -1,0 +1,8 @@
+Description:
+    Generates initializer for SitemapNotifier.
+
+Example:
+    rails generate sitemap_notifier notifier
+
+    This will create:
+        config/initializers/notifier.rb
