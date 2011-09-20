@@ -8,6 +8,14 @@ module SitemapNotifier
       attr_accessor :delay
       attr_accessor :sitemap_url
       attr_accessor :environments
+      attr_accessor :urls
+      def urls
+        @urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
+                   "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}",
+                   "http://submissions.ask.com/ping?sitemap=#{CGI::escape(sitemap_url)}"]
+                   # no Yahoo here, as they will be using Bing from september 15th, 2011
+      end
+      
       attr_accessor :running_pid
       
       def notify!
@@ -18,15 +26,16 @@ module SitemapNotifier
         if environments.include?(Rails.env.to_sym) && !running?
           self.running_pid = fork do
             Rails.logger.info "Notifying search engines of changes to sitemap..."
-
-            get_url "http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}"
-            get_url "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}"
-            get_url "http://submissions.ask.com/ping?sitemap=#{CGI::escape(sitemap_url)}"
-            # get_url "http://localhost:3000/ping?sitemap=#{CGI::escape(sitemap_url)}"
-            # no Yahoo here, as they will be using Bing from september 15th, 2011
-
+            
+            urls.each do |url|
+              if get_url(url)
+                Rails.logger.info "Notification succeeded: #{url}"
+              else
+                Rails.logger.info "Notification failed: #{url}"
+              end
+            end
+            
             sleep delay
-
             exit
           end
           
@@ -39,8 +48,9 @@ module SitemapNotifier
       def get_url(url)
         uri = URI.parse(url)
         begin
-          Net::HTTP.get_response(uri)
+          return Net::HTTPSuccess === Net::HTTP.get_response(uri)
         rescue Exception
+          return false
         end
       end
       
