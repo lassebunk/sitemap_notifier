@@ -5,10 +5,23 @@ require 'cgi'
 module SitemapNotifier
   class Notifier
     class << self
-      attr_accessor :delay
+      # sitemap url
       attr_accessor :sitemap_url
-      attr_accessor :environments
-      attr_accessor :urls
+      
+      # delay
+      attr_writer :delay
+      def delay
+        @delay ||= 600
+      end
+      
+      # environments
+      attr_writer :environments
+      def environments
+        @environments ||= [:production]
+      end
+      
+      # urls
+      attr_writer :urls
       def urls
         @urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
                    "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}",
@@ -17,10 +30,8 @@ module SitemapNotifier
       end
       
       attr_accessor :running_pid
-      
+
       def notify!
-        raise "environments not set – use SitemapNotifier::Notifier.environments = [:xx, :xx]" unless environments
-        raise "delay not set – use SitemapNotifier::Notifier.delay = xx" unless delay
         raise "sitemap_url not set – use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
         if environments.include?(Rails.env.to_sym) && !running?
@@ -38,8 +49,6 @@ module SitemapNotifier
             sleep delay
             exit
           end
-          
-          puts running_pid
         end
       end
       

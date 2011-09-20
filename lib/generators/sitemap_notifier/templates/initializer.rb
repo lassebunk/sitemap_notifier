@@ -1,11 +1,11 @@
-# enabled in which environments
-SitemapNotifier::Notifier.environments = [:development, :test, :production]
-
-# wait 10 minutes between notifications
-SitemapNotifier::Notifier.delay = 600
-
 # replace this with your own url
 SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
 
-# additional urls
+# enabled in which environments – default is [:production]
+# SitemapNotifier::Notifier.environments = [:development, :production]
+
+# delay to wait between notifications – default is 600 seconds
+# SitemapNotifier::Notifier.delay = 30
+
+# additional urls – be sure to call this after setting sitemap_url
 # SitemapNotifier::Notifier.urls << "http://localhost:3000/ping"
