@@ -29,6 +29,7 @@ module SitemapNotifier
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
       
+      # running pid
       attr_accessor :running_pid
 
       def notify!
