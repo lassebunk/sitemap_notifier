@@ -2,7 +2,7 @@ Description:
     Generates initializer for SitemapNotifier.
 
 Example:
-    rails generate sitemap_notifier notifier
+    rails generate sitemap_notifier sitemap_notifier
 
     This will create:
-        config/initializers/notifier.rb
+        config/initializers/sitemap_notifier.rb
