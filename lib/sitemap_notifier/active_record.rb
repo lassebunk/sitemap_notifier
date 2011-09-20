@@ -1,7 +1,11 @@
 module SitemapNotifier
   module ActiveRecord
     def notify_sitemap
-      ::SitemapNotifier::Notifier.notify!
+      notifier = ::SitemapNotifier::Notifier
+      
+      if notifier.models == :all || notifier.models.include?(self.class.name.tableize.to_sym)
+        notifier.notify!
+      end
     end
     
     def self.included(base)
