@@ -41,9 +41,9 @@ module SitemapNotifier
             
             urls.each do |url|
               if get_url(url)
-                Rails.logger.info "Succeeded: #{url}"
+                Rails.logger.info "#{url} – ok"
               else
-                Rails.logger.info "Failed: #{url}"
+                Rails.logger.info "#{url} – failed"
               end
             end
             
