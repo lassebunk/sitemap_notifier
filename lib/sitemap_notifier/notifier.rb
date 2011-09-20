@@ -21,6 +21,7 @@ module SitemapNotifier
 
               get_url "http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}"
               get_url "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}"
+              get_url "http://submissions.ask.com/ping?sitemap=#{CGI::escape(sitemap_url)}"
               # no Yahoo here, as they will be using Bing from september 15th, 2011
 
               sleep delay
