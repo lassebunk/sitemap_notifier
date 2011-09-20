@@ -3,6 +3,7 @@ SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
 
 # enabled in which environments – default is [:production]
 # SitemapNotifier::Notifier.environments = [:development, :production]
+# SitemapNotifier::Notifier.environments = :all
 
 # delay to wait between notifications – default is 600 seconds
 # SitemapNotifier::Notifier.delay = 30

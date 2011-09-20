@@ -35,7 +35,7 @@ module SitemapNotifier
       def notify!
         raise "sitemap_url not set – use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
-        if environments.include?(Rails.env.to_sym) && !running?
+        if (environments == :all || environments.include?(Rails.env.to_sym)) && !running?
           self.running_pid = fork do
             Rails.logger.info "Notifying search engines of changes to sitemap..."
             
