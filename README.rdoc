@@ -19,6 +19,9 @@ In <code>config/initializers/sitemap_notifier.rb</code>:
   # replace this with your own url
   SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
 
+  # source models – default is :all 
+  SitemapNotifier::Notifier.models = [:articles, :categories]
+
   # enabled in which environments – default is [:production]
   SitemapNotifier::Notifier.environments = [:development, :production]
 
