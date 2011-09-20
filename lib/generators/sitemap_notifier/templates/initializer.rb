@@ -1,8 +1,8 @@
 # replace this with your own url
 SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
 
-# source models – default is :all 
-#   SitemapNotifier::Notifier.models = [:articles, :categories]
+# source models – default is :all for all models
+#   SitemapNotifier::Notifier.sources = [:articles, :categories]
 
 # enabled in which environments – default is [:production]
 #   SitemapNotifier::Notifier.environments = [:development, :production]
