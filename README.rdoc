@@ -11,7 +11,7 @@ And run <code>bundle install</code>.
 
 == Example
 
-Start by generating initializer and route:
+Start by generating initializer:
 
   $ rails generate sitemap_notifier sitemap_notifier
 
