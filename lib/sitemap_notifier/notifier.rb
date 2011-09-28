@@ -9,9 +9,9 @@ module SitemapNotifier
       attr_accessor :sitemap_url
       
       # source
-      attr_writer :sources
-      def sources
-        @sources ||= :all
+      attr_writer :models
+      def models
+        @models ||= :all
       end
       
       # delay

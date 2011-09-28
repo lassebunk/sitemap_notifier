@@ -3,7 +3,7 @@ module SitemapNotifier
     def notify_sitemap
       notifier = ::SitemapNotifier::Notifier
       
-      if notifier.sources == :all || notifier.sources.include?(self.class.name.tableize.to_sym)
+      if notifier.models == :all || notifier.models.include?(self.class)
         notifier.notify!
       end
     end
