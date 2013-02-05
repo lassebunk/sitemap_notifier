@@ -30,20 +30,22 @@ $ rails generate sitemap_notifier:install
 And, in *config/initializers/sitemap_notifier.rb*:
 
 ```ruby
-# replace this with your own url
-SitemapNotifier::Notifier.sitemap_url = "http://example.com/sitemap.xml"
+SitemapNotifier::Notifier.configure do |config|
+  # Replace this with your own url
+  config.sitemap_url = "http://example.com/sitemap.xml"
 
-# sources – default is :all for all models
-SitemapNotifier::Notifier.models = [Article, Category]
+  # Sources – default is :all for all models
+  config.models = [Article, Category]
 
-# enabled in which environments – default is [:production]
-SitemapNotifier::Notifier.environments = [:development, :production]
+  # Enabled in which environments – default is [:production]
+  config.environments = [:development, :production]
 
-# delay to wait between notifications – default is 600 seconds
-SitemapNotifier::Notifier.delay = 30
+  # Delay to wait between notifications – default is 600 seconds
+  config.delay = 30
 
-# additional urls – be sure to call this after setting sitemap_url
-SitemapNotifier::Notifier.urls << "http://localhost:3000/ping"
+  # Additional urls – be sure to call this after setting sitemap_url
+  config.urls << "http://localhost:3000/ping"
+end
 ```
 
 Then create or update a model:
