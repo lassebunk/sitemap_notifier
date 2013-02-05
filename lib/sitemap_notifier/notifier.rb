@@ -7,7 +7,7 @@ module SitemapNotifier
     class << self
       # sitemap url
       attr_accessor :sitemap_url
-      
+
       # source
       attr_writer :models
       def models
@@ -25,7 +25,13 @@ module SitemapNotifier
       def environments
         @environments ||= [:production]
       end
-      
+
+      # current environment to enable testing
+      attr_writer :env
+      def env
+        defined?(Rails) ? Rails.env.to_sym : @env
+      end
+
       # urls
       attr_writer :urls
       def urls
@@ -40,15 +46,15 @@ module SitemapNotifier
       def notify
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
-        if (environments == :all || environments.include?(Rails.env.to_sym)) && !running?
+        if (environments == :all || environments.include?(env)) && !running?
           self.running_pid = fork do
-            Rails.logger.info "Notifying search engines of changes to sitemap..."
+            Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
             
             urls.each do |url|
               if get_url(url)
-                Rails.logger.info "#{url} - ok"
+                Rails.logger.info "#{url} - ok" if defined?(Rails)
               else
-                Rails.logger.info "#{url} - failed"
+                Rails.logger.info "#{url} - failed" if defined?(Rails)
               end
             end
             
