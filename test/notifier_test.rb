@@ -11,4 +11,10 @@ class NotifierTest < Test::Unit::TestCase
     end
     assert_equal "http://myconfigureddomain.com/sitemap.xml", SitemapNotifier::Notifier.sitemap_url
   end
+
+  def test_configured_models_is_empty_as_default
+    SitemapNotifier::Notifier.configure do |config|
+    end
+    assert_empty SitemapNotifier::Notifier.models
+  end
 end

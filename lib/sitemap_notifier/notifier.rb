@@ -11,7 +11,7 @@ module SitemapNotifier
       # source
       attr_writer :models
       def models
-        @models ||= :all
+        @models ||= []
       end
       
       # delay
@@ -60,6 +60,9 @@ module SitemapNotifier
 
       def configure
         yield self
+        if models.empty? && defined?(Rails)
+          Rails.logger.warn "SitemapNotifier was configured without any models to trigger notifications. Search engines will therefore not be notified."
+        end
       end
 
       # For testing purposes
