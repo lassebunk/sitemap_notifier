@@ -99,7 +99,7 @@ module SitemapNotifier
         last_notified.nil? || Time.now >= last_notified + delay
       end
 
-      # Holds notified URLs like notification_times["http://mydomain.com/sitemap.xml"] # => 2013-02-05 19:10:29 +0100
+      # Holds notified URL times like notified_urls["http://mydomain.com/sitemap.xml"] # => 2013-02-05 19:10:29 +0100
       def notified_urls
         @notified_urls ||= {}
       end
