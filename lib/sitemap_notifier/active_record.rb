@@ -1,3 +1,5 @@
+require "active_record"
+
 module SitemapNotifier
   module ActiveRecord
     def self.included(base)
