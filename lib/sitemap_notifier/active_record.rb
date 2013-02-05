@@ -13,3 +13,5 @@ module SitemapNotifier
     end
   end
 end
+
+ActiveRecord::Base.send :include, SitemapNotifier::ActiveRecord
