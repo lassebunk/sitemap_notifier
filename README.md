@@ -27,7 +27,7 @@ Start by generating an initializer:
 $ rails generate sitemap_notifier:install
 ```
 
-And, in *config/initializers/sitemap_notifier.rb*:
+Then, in *config/initializers/sitemap_notifier.rb*:
 
 ```ruby
 SitemapNotifier::Notifier.configure do |config|
