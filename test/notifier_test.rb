@@ -52,4 +52,17 @@ class NotifierTest < Test::Unit::TestCase
     end
     Article.create! :title => "Test"
   end
+
+  def test_notifies_for_configured_models
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = [Article, Product]
+      config.sitemap_url = "http://test.dk/sitemap.xml"
+    end
+
+    SitemapNotifier::Notifier.expects(:notify).twice
+
+    [Article, Product, User].each do |model|
+      model.create!
+    end
+  end
 end
