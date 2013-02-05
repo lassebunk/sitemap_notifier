@@ -96,7 +96,7 @@ module SitemapNotifier
 
       def ping?(sitemap_url)
         last_notified = notified_at(sitemap_url)
-        last_notified.nil? || Time.now > last_notified + delay
+        last_notified.nil? || Time.now >= last_notified + delay
       end
 
       # Holds notified URLs like notification_times["http://mydomain.com/sitemap.xml"] # => 2013-02-05 19:10:29 +0100
