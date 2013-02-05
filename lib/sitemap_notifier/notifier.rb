@@ -46,20 +46,15 @@ module SitemapNotifier
       def notify
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
-        if (environments == :all || environments.include?(env)) && !running?
-          self.running_pid = fork do
-            Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
-            
-            urls.each do |url|
-              if get_url(url)
-                Rails.logger.info "#{url} - ok" if defined?(Rails)
-              else
-                Rails.logger.info "#{url} - failed" if defined?(Rails)
-              end
+        if environments == :all || environments.include?(env)
+          Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
+          
+          urls.each do |url|
+            if get_url(url)
+              Rails.logger.info "#{url} - ok" if defined?(Rails)
+            else
+              Rails.logger.info "#{url} - failed" if defined?(Rails)
             end
-            
-            sleep delay
-            exit
           end
         end
       end
@@ -86,17 +81,6 @@ module SitemapNotifier
           return Net::HTTPSuccess === Net::HTTP.get_response(uri)
         rescue Exception
           return false
-        end
-      end
-      
-      def running?
-        return false unless running_pid
-        
-        begin
-          Process.getpgid(running_pid)
-          true
-        rescue Errno::ESRCH
-          false
         end
       end
     end
