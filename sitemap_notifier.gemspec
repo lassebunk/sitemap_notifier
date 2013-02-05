@@ -1,12 +1,21 @@
-Gem::Specification.new do |s|
-  s.name = "sitemap_notifier"
-  s.version = "0.0.4"
+# -*- encoding: utf-8 -*-
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'sitemap_notifier/version'
 
-  s.author = "Lasse Bunk"
-  s.email = "lassebunk@gmail.com"
-  s.description = "Ruby on Rails plugin that automatically notifies Google, Bing, Yahoo, and Ask.com of changes to your models, i.e. changes to your sitemap."
-  s.summary = "Automatically notify search engines when your models are updated."
-  s.homepage = "http://github.com/lassebunk/sitemap_notifier"
-  s.files = Dir['lib/**/*.rb']
-  s.require_paths = ["lib"]
+Gem::Specification.new do |gem|
+  gem.name          = "sitemap_notifier"
+  gem.version       = SitemapNotifier::VERSION
+  gem.authors       = ["Lasse Bunk"]
+  gem.email         = ["lassebunk@gmail.com"]
+  gem.description   = %q{Ruby on Rails plugin that automatically notifies Google, Bing, Yahoo, and Ask.com of changes to your models, i.e. changes to your sitemap.}
+  gem.summary       = %q{Automatically notify search engines when your models are updated.}
+  gem.homepage      = "http://github.com/lassebunk/sitemap_notifier"
+  gem.license       = "MIT"
+
+  gem.files         = `git ls-files`.split($/)
+  gem.test_files    = gem.files.grep(%r{^test/})
+  gem.require_paths = ["lib"]
+
+  gem.add_development_dependency "rake"
 end

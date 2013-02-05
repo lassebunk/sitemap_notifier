@@ -39,7 +39,7 @@ module SitemapNotifier
       attr_accessor :running_pid
 
       def notify!
-        raise "sitemap_url not set – use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
+        raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
         if (environments == :all || environments.include?(Rails.env.to_sym)) && !running?
           self.running_pid = fork do
@@ -47,9 +47,9 @@ module SitemapNotifier
             
             urls.each do |url|
               if get_url(url)
-                Rails.logger.info "#{url} – ok"
+                Rails.logger.info "#{url} - ok"
               else
-                Rails.logger.info "#{url} – failed"
+                Rails.logger.info "#{url} - failed"
               end
             end
             
