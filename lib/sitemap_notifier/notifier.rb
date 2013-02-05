@@ -81,11 +81,11 @@ module SitemapNotifier
       end
       
       def ping_url(url)
-        uri = URI.parse(url)
         sitemap_notified(url)
         begin
-          return Net::HTTPSuccess === Net::HTTP.get_response(uri)
-        rescue Exception
+          Net::HTTP.get(URI.parse(url))
+          return true
+        rescue
           return false
         end
       end
