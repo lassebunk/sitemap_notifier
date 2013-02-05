@@ -38,7 +38,7 @@ module SitemapNotifier
       # running pid
       attr_accessor :running_pid
 
-      def notify!
+      def notify
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'xx'" unless sitemap_url
         
         if (environments == :all || environments.include?(Rails.env.to_sym)) && !running?
