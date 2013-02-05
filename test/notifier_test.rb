@@ -25,7 +25,6 @@ class NotifierTest < Test::Unit::TestCase
     notifier = SitemapNotifier::Notifier
     notifier.configure do |config|
       config.delay = 10
-      config.environments = []
     end
 
     url = "http://test.dk"
