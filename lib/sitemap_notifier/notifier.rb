@@ -48,7 +48,7 @@ module SitemapNotifier
 
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless url
         
-        if environments == :all || environments.include?(env)
+        if run? && ping?(url)
           Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
           
           urls.each do |ping_url|
@@ -82,11 +82,34 @@ module SitemapNotifier
       
       def ping_url(url)
         uri = URI.parse(url)
+        sitemap_notified(url)
         begin
           return Net::HTTPSuccess === Net::HTTP.get_response(uri)
         rescue Exception
           return false
         end
+      end
+
+      def run?
+        environments == :all || environments.include?(env)
+      end
+
+      def ping?(sitemap_url)
+        last_notified = notified_at(sitemap_url)
+        last_notified.nil? || Time.now > last_notified + delay
+      end
+
+      # Holds notified URLs like notification_times["http://mydomain.com/sitemap.xml"] # => 2013-02-05 19:10:29 +0100
+      def notified_urls
+        @notified_urls ||= {}
+      end
+
+      def notified_at(sitemap_url)
+        notified_urls[sitemap_url]
+      end
+
+      def sitemap_notified(sitemap_url)
+        notified_urls[sitemap_url] = Time.now
       end
     end
   end

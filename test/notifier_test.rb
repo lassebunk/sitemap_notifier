@@ -20,4 +20,22 @@ class NotifierTest < Test::Unit::TestCase
     end
     assert_empty SitemapNotifier::Notifier.models
   end
+
+  def test_waits_delay
+    notifier = SitemapNotifier::Notifier
+    notifier.configure do |config|
+      config.delay = 10
+      config.environments = []
+    end
+
+    url = "http://test.dk"
+    assert notifier.ping?(url), "Didn't ping URL."
+
+    notifier.ping_url(url)
+    assert !notifier.ping?(url), "Didn't wait before pinging again."
+
+    Timecop.travel(Time.now + 20) do
+      assert notifier.ping?(url), "Didn't ping after waiting."
+    end
+  end
 end
