@@ -5,7 +5,7 @@ class NotifierTest < Test::Unit::TestCase
     SitemapNotifier::Notifier.reset_configuration
   end
 
-  def test_configuration
+  def test_configuration_block
     SitemapNotifier::Notifier.configure do |config|
       config.sitemap_url = "http://myconfigureddomain.com/sitemap.xml"
     end
