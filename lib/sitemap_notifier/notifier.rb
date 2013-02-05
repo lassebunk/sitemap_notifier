@@ -36,7 +36,7 @@ module SitemapNotifier
       attr_writer :ping_urls
       def ping_urls
         @ping_urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=%{sitemap_url}",
-                   "http://www.bing.com/webmaster/ping.aspx?siteMap=%{sitemap_url}"]
+                        "http://www.bing.com/webmaster/ping.aspx?siteMap=%{sitemap_url}"]
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
       
