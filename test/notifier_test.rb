@@ -65,4 +65,18 @@ class NotifierTest < Test::Unit::TestCase
       model.create!
     end
   end
+
+  def test_notifies_custom_ping_url
+    ping_url = "http://bla.dk/ping.php"
+
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = [Article]
+      config.sitemap_url = "http://test.dk/sitemap.xml"
+      config.ping_urls = [ping_url] # TODO: Get this to work so we can test using "config.ping_urls << ping_url" instead
+    end
+
+    Net::HTTP.expects(:get).with(URI.parse(ping_url))
+
+    Article.create!
+  end
 end
