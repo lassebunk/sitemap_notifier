@@ -73,7 +73,7 @@ module SitemapNotifier
 
       # For testing purposes
       def reset
-        [:@sitemap_url, :@models, :@delay, :@environments, :@urls, :@notified_urls].each do |var|
+        [:@sitemap_url, :@models, :@delay, :@environments, :@ping_urls, :@notified_urls].each do |var|
           remove_instance_variable var if instance_variable_defined?(var)
         end
       end
