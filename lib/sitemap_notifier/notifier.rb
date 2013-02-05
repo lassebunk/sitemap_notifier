@@ -61,6 +61,13 @@ module SitemapNotifier
       def configure
         yield self
       end
+
+      # For testing purposes
+      def reset_configuration
+        [:@models, :@delay, :@environments, :@urls].each do |var|
+          remove_instance_variable var if instance_variable_defined?(var)
+        end
+      end
       
     protected
     
