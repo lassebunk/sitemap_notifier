@@ -1,7 +1,7 @@
 Sitemap Notifier
 ================
 
-Sitemap Notifier is a Ruby on Rails plugin that, when installed, automatically notifies Google, Bing, Yahoo, and Ask.com of changes to your models, i.e. changes to your sitemap. It also works in conjunction with the [dynamic_sitemaps](https://github.com/lassebunk/dynamic_sitemaps) plugin.
+Sitemap Notifier is a Ruby on Rails plugin that, when installed, automatically notifies Google, Bing, and Yahoo of changes to your models, i.e. changes to your sitemap. It also works in conjunction with the [dynamic_sitemaps](https://github.com/lassebunk/dynamic_sitemaps) plugin.
 
 Installation
 ------------
@@ -59,7 +59,7 @@ The search engines are then automatically notified.
 After installation
 ------------------
 
-After you install and configure the plugin, it'll automatically notify Google, Bing, Yahoo, and Ask.com every time you update a model. After each notification, it'll wait 10 minutes (by default) before notifying again. This is to ensure that for example a batch update won't trigger an equal amount of notifications.
+After you install and configure the plugin, it'll automatically notify Google, Bing, and Yahoo every time you update a model. After each notification, it'll wait 10 minutes (by default) before notifying again. This is to ensure that for example a batch update won't trigger an equal amount of notifications.
 
 Customization
 -------------
