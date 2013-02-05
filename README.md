@@ -59,4 +59,21 @@ After installation
 
 After you install and configure the plugin, it'll automatically notify Google, Bing, Yahoo, and Ask.com every time you update a model. After each notification, it'll wait 10 minutes (by default) before notifying again. This is to ensure that for example a batch update won't trigger an equal amount of notifications.
 
+Customization
+-------------
+
+### Per model sitemap URL
+
+The sitemaps defaults to what you set in `SitemapNotifier::Notifier.sitemap_url`. If you want to use a different sitemap URL based on data in your models, you can override the `sitemap_url` method of each of your models like this:
+
+```ruby
+class Product < ActiveRecord::Base
+  belongs_to :site
+
+  def sitemap_url
+    "http://#{site.domain}/sitemap.xml"
+  end
+end
+```
+
 Copyright &copy; 2010-2013 Lasse Bunk, released under the MIT license
