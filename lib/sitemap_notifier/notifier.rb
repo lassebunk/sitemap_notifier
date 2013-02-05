@@ -54,9 +54,11 @@ module SitemapNotifier
       def ping_all(url)
         Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
         
-        ping_urls.each do |ping_url|
-          ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
-          if ping_url(ping_url)
+        escaped_url = escape_sitemap_url(url)
+
+        ping_urls.each do |url|
+          url.gsub! "%{sitemap_url}", escaped_url
+          if ping_url(url)
             Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
           else
             Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
