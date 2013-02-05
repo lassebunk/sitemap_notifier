@@ -1,6 +1,10 @@
 require "test_helper"
 
 class NotifierTest < Test::Unit::TestCase
+  def setup
+    SitemapNotifier::Notifier.reset_configuration
+  end
+
   def test_configuration
     SitemapNotifier::Notifier.configure do |config|
       config.sitemap_url = "http://myconfigureddomain.com/sitemap.xml"
