@@ -24,7 +24,7 @@ Example
 Start by generating an initializer:
 
 ```bash
-$ rails generate sitemap_notifier sitemap_notifier
+$ rails generate sitemap_notifier:install
 ```
 
 And, in *config/initializers/sitemap_notifier.rb*:
