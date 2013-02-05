@@ -48,7 +48,7 @@ class NotifierTest < Test::Unit::TestCase
 
     ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
      "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}"].each do |ping_url|
-      Net::HTTP.expects(:get).with(URI.parse(ping_url)).once
+      Net::HTTP.expects(:get).with(URI.parse(ping_url))
     end
     Article.create! :title => "Test"
   end
