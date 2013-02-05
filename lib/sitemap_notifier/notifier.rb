@@ -33,9 +33,9 @@ module SitemapNotifier
       end
 
       # urls
-      attr_writer :urls
-      def urls
-        @urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=%{sitemap_url}",
+      attr_writer :ping_urls
+      def ping_urls
+        @ping_urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=%{sitemap_url}",
                    "http://www.bing.com/webmaster/ping.aspx?siteMap=%{sitemap_url}"]
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
@@ -51,7 +51,7 @@ module SitemapNotifier
         if run? && ping?(url)
           Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
           
-          urls.each do |ping_url|
+          ping_urls.each do |ping_url|
             ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
             if ping_url(ping_url)
               Rails.logger.info "#{ping_url} - ok" if defined?(Rails)

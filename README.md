@@ -44,7 +44,7 @@ SitemapNotifier::Notifier.configure do |config|
   config.delay = 30
 
   # Additional urls – be sure to call this after setting sitemap_url
-  config.urls << "http://localhost:3000/ping"
+  config.ping_urls << "http://localhost:3000/ping"
 end
 ```
 
