@@ -40,21 +40,25 @@ module SitemapNotifier
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
       
-      def notify(url = nil)
+      def run(url = nil)
         url ||= sitemap_url
 
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless url
         
         if run? && ping?(url)
-          Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
-          
-          ping_urls.each do |ping_url|
-            ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
-            if ping_url(ping_url)
-              Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
-            else
-              Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
-            end
+          ping_all url
+        end
+      end
+
+      def ping_all(url)
+        Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
+        
+        ping_urls.each do |ping_url|
+          ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
+          if ping_url(ping_url)
+            Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
+          else
+            Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
           end
         end
       end

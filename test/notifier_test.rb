@@ -59,7 +59,7 @@ class NotifierTest < Test::Unit::TestCase
       config.sitemap_url = "http://test.dk/sitemap.xml"
     end
 
-    SitemapNotifier::Notifier.expects(:notify).twice
+    SitemapNotifier::Notifier.expects(:run).twice
 
     [Article, Product, User].each do |model|
       model.create!
