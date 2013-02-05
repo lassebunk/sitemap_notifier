@@ -35,25 +35,28 @@ module SitemapNotifier
       # urls
       attr_writer :urls
       def urls
-        @urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
-                   "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}"]
+        @urls ||= ["http://www.google.com/webmasters/sitemaps/ping?sitemap=%{sitemap_url}",
+                   "http://www.bing.com/webmaster/ping.aspx?siteMap=%{sitemap_url}"]
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
       
       # running pid
       attr_accessor :running_pid
 
-      def notify
-        raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless sitemap_url
+      def notify(url = nil)
+        url ||= sitemap_url
+
+        raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless url
         
         if environments == :all || environments.include?(env)
           Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
           
-          urls.each do |url|
-            if get_url(url)
-              Rails.logger.info "#{url} - ok" if defined?(Rails)
+          urls.each do |ping_url|
+            ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
+            if get_url(ping_url)
+              Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
             else
-              Rails.logger.info "#{url} - failed" if defined?(Rails)
+              Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
             end
           end
         end
@@ -71,6 +74,10 @@ module SitemapNotifier
         [:@sitemap_url, :@models, :@delay, :@environments, :@urls].each do |var|
           remove_instance_variable var if instance_variable_defined?(var)
         end
+      end
+
+      def escape_sitemap_url(url)
+        CGI::escape(url)
       end
       
     protected

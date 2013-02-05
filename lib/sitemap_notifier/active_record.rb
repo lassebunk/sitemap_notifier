@@ -10,7 +10,7 @@ module SitemapNotifier
       notifier = SitemapNotifier::Notifier
       
       if notifier.models == :all || notifier.models.include?(self.class)
-        notifier.notify
+        notifier.notify(sitemap_url)
       end
     end
 
