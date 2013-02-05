@@ -2,7 +2,7 @@ require "test_helper"
 
 class NotifierTest < Test::Unit::TestCase
   def setup
-    SitemapNotifier::Notifier.reset_configuration
+    SitemapNotifier::Notifier.reset
     SitemapNotifier::Notifier.configure do |config|
       config.environments = :all
     end
