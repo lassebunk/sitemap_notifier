@@ -58,6 +58,10 @@ module SitemapNotifier
           end
         end
       end
+
+      def configure
+        yield self
+      end
       
     protected
     
