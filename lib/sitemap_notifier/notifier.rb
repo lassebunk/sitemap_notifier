@@ -53,7 +53,7 @@ module SitemapNotifier
           
           urls.each do |ping_url|
             ping_url.gsub! "%{sitemap_url}", escape_sitemap_url(url)
-            if get_url(ping_url)
+            if ping_url(ping_url)
               Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
             else
               Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
@@ -80,9 +80,7 @@ module SitemapNotifier
         CGI::escape(url)
       end
       
-    protected
-    
-      def get_url(url)
+      def ping_url(url)
         uri = URI.parse(url)
         begin
           return Net::HTTPSuccess === Net::HTTP.get_response(uri)
