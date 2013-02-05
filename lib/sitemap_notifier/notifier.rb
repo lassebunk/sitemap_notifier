@@ -45,7 +45,7 @@ module SitemapNotifier
 
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless url
 
-        if run? && ping?(url)
+        if (environments == :all || environments.include?(env)) && ping?(url)
           ping_all url
           sitemap_notified url
         end
@@ -89,10 +89,6 @@ module SitemapNotifier
         rescue
           return false
         end
-      end
-
-      def run?
-        environments == :all || environments.include?(env)
       end
 
       def ping?(sitemap_url)
