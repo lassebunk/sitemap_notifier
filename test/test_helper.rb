@@ -4,6 +4,7 @@ require 'sitemap_notifier'
 require 'db'
 require 'timecop'
 require 'fakeweb'
+require 'mocha/setup'
 
 # Catch requests to Google and Bing
 [%r{http://www\.google\.com/webmasters/sitemaps/ping\?sitemap=},

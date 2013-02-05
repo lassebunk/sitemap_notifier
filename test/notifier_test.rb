@@ -38,4 +38,19 @@ class NotifierTest < Test::Unit::TestCase
       assert notifier.ping?(url), "Didn't ping after waiting."
     end
   end
+
+  def test_notifies_search_engines
+    sitemap_url = "http://mydomain.dk/sitemap.xml"
+
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = [Article]
+      config.sitemap_url = sitemap_url
+    end
+
+    ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
+     "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}"].each do |ping_url|
+      Net::HTTP.expects(:get).with(URI.parse(ping_url)).once
+    end
+    Article.create! :title => "Test"
+  end
 end
