@@ -44,9 +44,10 @@ module SitemapNotifier
         url ||= sitemap_url
 
         raise "sitemap_url not set - use SitemapNotifier::Notifier.sitemap_url = 'http://domain.com/sitemap.xml'" unless url
-        
+
         if run? && ping?(url)
           ping_all url
+          sitemap_notified url
         end
       end
 
@@ -82,7 +83,6 @@ module SitemapNotifier
       end
       
       def ping_url(url)
-        sitemap_notified(url)
         begin
           Net::HTTP.get(URI.parse(url))
           return true
