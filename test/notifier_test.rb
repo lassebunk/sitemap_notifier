@@ -84,4 +84,18 @@ class NotifierTest < Test::Unit::TestCase
 
     Article.create!
   end
+
+  def test_notifies_about_custom_sitemap_url
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = [Product]
+    end
+
+    custom_sitemap_url = "http://mycustomurl.com/sitemapfile.xml"
+    ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(custom_sitemap_url)}",
+     "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(custom_sitemap_url)}"].each do |ping_url|
+      Net::HTTP.expects(:get).with(URI.parse(ping_url))
+    end
+
+    Product.create!
+  end
 end
