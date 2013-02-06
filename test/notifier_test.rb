@@ -15,10 +15,13 @@ class NotifierTest < Test::Unit::TestCase
     assert_equal "http://myconfigureddomain.com/sitemap.xml", SitemapNotifier::Notifier.sitemap_url
   end
 
-  def test_configured_models_is_empty_as_default
+  def test_doesnt_notify_when_no_models_configured
     SitemapNotifier::Notifier.configure do |config|
     end
-    assert SitemapNotifier::Notifier.models.empty?, "Configured models wasn't empty."
+    [Article, Product, User, Site].each do |model|
+      assert !SitemapNotifier::Notifier.notify_of_changes_to?(model), "Notifies of changes to #{model.name}."
+    end
+  end
   end
 
   def test_waits_delay
