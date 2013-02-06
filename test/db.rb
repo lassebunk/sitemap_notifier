@@ -14,6 +14,11 @@ ActiveRecord::Migration.create_table :users do |t|
   t.string :name
 end
 
+ActiveRecord::Migration.create_table :sites do |t|
+  t.string :name
+  t.boolean :has_sitemap
+end
+
 # Standard model to trigger notifications
 class Article < ActiveRecord::Base
 end
@@ -27,4 +32,11 @@ end
 
 # Model that should not trigger notifications
 class User < ActiveRecord::Base
+end
+
+# Model that has conditional notifications
+class Site < ActiveRecord::Base
+  def notify_sitemap?
+    has_sitemap?
+  end
 end

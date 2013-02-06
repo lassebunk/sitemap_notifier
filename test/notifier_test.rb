@@ -97,4 +97,17 @@ class NotifierTest < Test::Unit::TestCase
 
     Product.create!
   end
+
+  def test_responds_to_conditional_notifications
+    SitemapNotifier::Notifier.configure do |config|
+      config.sitemap_url = "http://test.dk/sitemap.xml"
+      config.models = [Site]
+      config.delay = 0
+    end
+
+    SitemapNotifier::Notifier.expects(:ping_all).twice
+
+    2.times { Site.create! :has_sitemap => true }
+    Site.create! :has_sitemap => false
+  end
 end

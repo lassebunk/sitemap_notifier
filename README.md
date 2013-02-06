@@ -78,4 +78,18 @@ class Product < ActiveRecord::Base
 end
 ```
 
+### Conditional notifications
+
+You can decide on model level whether the search engines should be pinged by overriding the `notify_sitemap?` method of your models:
+
+```ruby
+class Product < ActiveRecord::Base
+  belongs_to :site
+
+  def notify_sitemap?
+    site.id == 1
+  end
+end
+```
+
 Copyright &copy; 2010-2013 Lasse Bunk, released under the MIT license
