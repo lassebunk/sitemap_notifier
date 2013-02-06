@@ -68,7 +68,7 @@ module SitemapNotifier
 
       def configure
         yield self
-        if models.empty? && defined?(Rails)
+        if models.is_a?(Array) && models.empty? && defined?(Rails)
           Rails.logger.warn "SitemapNotifier was configured without any models to trigger notifications. Search engines will therefore not be notified."
         end
       end
