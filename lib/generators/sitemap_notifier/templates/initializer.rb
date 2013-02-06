@@ -13,7 +13,7 @@ SitemapNotifier::Notifier.configure do |config|
   # or
   #   config.environments = :all
 
-  # Delay to wait between notifications – default is 600 seconds
+  # Delay to wait between notifications – default is 10 minutes
   #   config.delay = 2.minutes
 
   # Additional urls to ping

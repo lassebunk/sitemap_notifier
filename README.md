@@ -44,7 +44,7 @@ SitemapNotifier::Notifier.configure do |config|
   # Enabled in which environments – default is [:production]
   config.environments = [:development, :production]
 
-  # Delay to wait between notifications – default is 600 seconds
+  # Delay to wait between notifications – default is 10 minutes
   config.delay = 2.minutes
 
   # Additional urls to ping
