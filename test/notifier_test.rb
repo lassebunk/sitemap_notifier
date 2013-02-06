@@ -67,15 +67,20 @@ class NotifierTest < Test::Unit::TestCase
   end
 
   def test_notifies_custom_ping_url
+    sitemap_url = "http://test.dk/sitemap.xml"
     ping_url = "http://bla.dk/ping.php"
 
     SitemapNotifier::Notifier.configure do |config|
       config.models = [Article]
-      config.sitemap_url = "http://test.dk/sitemap.xml"
-      config.ping_urls = [ping_url] # TODO: Get this to work so we can test using "config.ping_urls << ping_url" instead
+      config.sitemap_url = sitemap_url
+      config.ping_urls << ping_url # TODO: Get this to work so we can test using "config.ping_urls << ping_url" instead
     end
 
-    Net::HTTP.expects(:get).with(URI.parse(ping_url))
+    ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
+     "http://www.bing.com/webmaster/ping.aspx?siteMap=#{CGI::escape(sitemap_url)}",
+     ping_url].each do |ping_url|
+      Net::HTTP.expects(:get).with(URI.parse(ping_url))
+    end
 
     Article.create!
   end
