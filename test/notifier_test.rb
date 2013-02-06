@@ -18,7 +18,7 @@ class NotifierTest < Test::Unit::TestCase
   def test_configured_models_is_empty_as_default
     SitemapNotifier::Notifier.configure do |config|
     end
-    assert_empty SitemapNotifier::Notifier.models
+    assert SitemapNotifier::Notifier.models.empty?, "Configured models wasn't empty."
   end
 
   def test_waits_delay
