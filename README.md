@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/lassebunk/sitemap_notifier.png)](http://travis-ci.org/lassebunk/sitemap_notifier)
+
 Sitemap Notifier
 ================
 
