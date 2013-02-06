@@ -1,5 +1,5 @@
 SitemapNotifier::Notifier.configure do |config|
-  # Set URL to your sitemap
+  # Set URL to your sitemap. This is required.
   #   config.sitemap_url = "http://example.com/sitemap.xml"
   #
   # This can also be configured per model basis,

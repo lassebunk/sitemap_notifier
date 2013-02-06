@@ -33,7 +33,7 @@ Then, in *config/initializers/sitemap_notifier.rb*:
 
 ```ruby
 SitemapNotifier::Notifier.configure do |config|
-  # Set URL to your sitemap
+  # Set URL to your sitemap. This is required.
   # This can also be configured per model basis,
   # see https://github.com/lassebunk/sitemap_notifier#per-model-sitemap-url
   config.sitemap_url = "http://example.com/sitemap.xml"
