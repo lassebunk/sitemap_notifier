@@ -73,7 +73,7 @@ class NotifierTest < Test::Unit::TestCase
     SitemapNotifier::Notifier.configure do |config|
       config.models = [Article]
       config.sitemap_url = sitemap_url
-      config.ping_urls << ping_url # TODO: Get this to work so we can test using "config.ping_urls << ping_url" instead
+      config.ping_urls << ping_url
     end
 
     ["http://www.google.com/webmasters/sitemaps/ping?sitemap=#{CGI::escape(sitemap_url)}",
