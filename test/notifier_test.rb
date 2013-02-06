@@ -22,6 +22,15 @@ class NotifierTest < Test::Unit::TestCase
       assert !SitemapNotifier::Notifier.notify_of_changes_to?(model), "Notifies of changes to #{model.name}."
     end
   end
+
+  def test_notifies_when_configured_to_all_models
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = :all
+    end
+
+    [Article, Product, User, Site].each do |model|
+      assert SitemapNotifier::Notifier.notify_of_changes_to?(model), "Doesn't notify of changes to #{model.name}."
+    end
   end
 
   def test_waits_delay
