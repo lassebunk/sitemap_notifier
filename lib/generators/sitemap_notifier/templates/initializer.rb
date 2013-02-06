@@ -1,15 +1,21 @@
 SitemapNotifier::Notifier.configure do |config|
-  config.sitemap_url = "http://example.com/sitemap.xml"
+  # Set URL to your sitemap
+  #   config.sitemap_url = "http://example.com/sitemap.xml"
+  #
+  # This can also be configured per model basis,
+  # see https://github.com/lassebunk/sitemap_notifier#per-model-sitemap-url
 
-  # config.models = [Article, Category]
+  # Models that should trigger notification of search engines
+  #   config.models = [Article, Category]
 
-  # enabled in which environments – default is [:production]
+  # Enabled in which environments – default is [:production]
   #   config.environments = [:development, :production]
+  # or
   #   config.environments = :all
 
-  # delay to wait between notifications – default is 600 seconds
-  #   config.delay = 30
+  # Delay to wait between notifications – default is 600 seconds
+  #   config.delay = 2.minutes
 
-  # additional urls – be sure to call this after setting sitemap_url
-  #   config.ping_urls << "http://localhost:3000/ping"
+  # Additional urls to ping
+  #   config.ping_urls << "http://localhost:3000/ping?sitemap=%{sitemap_url}"
 end
