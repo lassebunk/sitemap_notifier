@@ -110,6 +110,10 @@ module SitemapNotifier
       def sitemap_notified(sitemap_url)
         notified_urls[sitemap_url] = Time.now
       end
+
+      def notify_of_changes_to?(model)
+        models == :all || models.include?(model)
+      end
     end
   end
 end

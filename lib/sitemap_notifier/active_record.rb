@@ -9,7 +9,7 @@ module SitemapNotifier
     def notify_sitemap
       notifier = SitemapNotifier::Notifier
       
-      if (notifier.models == :all || notifier.models.include?(self.class)) && notify_sitemap?
+      if (notifier.notify_of_changes_to?(self.class)) && notify_sitemap?
         notifier.run(sitemap_url)
       end
     end
