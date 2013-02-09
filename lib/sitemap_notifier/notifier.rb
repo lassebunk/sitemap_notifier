@@ -119,7 +119,7 @@ module SitemapNotifier
 
       # Pings all the configured search engines with the supplied +url+.
       def ping_all(url)
-        proc = Proc.new do
+        p = Proc.new do
           Rails.logger.info "Notifying search engines of changes to sitemap #{url}..." if defined?(Rails)
           
           escaped_url = escape_sitemap_url(url)
@@ -134,7 +134,7 @@ module SitemapNotifier
           end
         end
 
-        background ? Thread.new(&proc) : proc.call
+        background ? Thread.new(&p) : p.call
       end
 
       # Yields a configuration block to configure the notifier.
