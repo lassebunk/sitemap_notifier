@@ -42,7 +42,7 @@ SitemapNotifier::Notifier.configure do |config|
   # Default is on all creates, updates, and deletes.
   config.models = [Article, Category]
 
-  # If you want to specify when to notify search engines:
+  # If you want to specify on which actions to notify search engines:
   config.models = { Article => [:create, :destroy],
                     Product => :update,
                     Page => :all }
