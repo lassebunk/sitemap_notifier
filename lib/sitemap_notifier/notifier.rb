@@ -42,7 +42,9 @@ module SitemapNotifier
       end
       
       def models=(hash_or_array)
-        if hash_or_array.is_a?(Array)
+        if hash_or_array == :all
+          @models = { :all => :all }
+        elsif hash_or_array.is_a?(Array)
           @models = Hash[hash_or_array.map { |model| [model, :all] }]
         else
           @models = hash_or_array
@@ -195,13 +197,11 @@ module SitemapNotifier
 
       # Returns +true+ if changes to the given model class should trigger notifications.
       def notify_of_changes_to?(model, action)
-        return true if models == :all
+        valid_actions = models[model] || models[:all]
 
-        valid_actions = models[model]
-        models == :all ||
-                  valid_actions == :all ||
-                  valid_actions == action ||
-                  (valid_actions.is_a?(Array) && valid_actions.include?(action))
+        return valid_actions == :all ||
+               valid_actions == action ||
+               (valid_actions.is_a?(Array) && valid_actions.include?(action))
       end
     end
   end
