@@ -99,7 +99,6 @@ module SitemapNotifier
       # Example:
       #
       #   SitemapNotifier::Notifier.background = false
-      #
       def background
         return @background if defined?(@background)
         @background = true
