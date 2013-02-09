@@ -128,9 +128,9 @@ module SitemapNotifier
           ping_urls.each do |url|
             url.gsub! "%{sitemap_url}", escaped_url
             if ping_url(url)
-              Rails.logger.info "#{url} - ok" if defined?(Rails)
+              Rails.logger.info "Successfully notified #{url}" if defined?(Rails)
             else
-              Rails.logger.info "#{url} - failed" if defined?(Rails)
+              Rails.logger.info "Failed to notify #{url}" if defined?(Rails)
             end
           end
         end
