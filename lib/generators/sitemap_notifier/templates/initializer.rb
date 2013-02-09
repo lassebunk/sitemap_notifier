@@ -18,4 +18,7 @@ SitemapNotifier::Notifier.configure do |config|
 
   # Additional urls to ping
   #   config.ping_urls << "http://localhost:3000/ping?sitemap=%{sitemap_url}"
+
+  # If you don't want the notifications to run in the background
+  #   config.background = false
 end

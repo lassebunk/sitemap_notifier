@@ -5,6 +5,7 @@ class NotifierTest < Test::Unit::TestCase
     SitemapNotifier::Notifier.reset
     SitemapNotifier::Notifier.configure do |config|
       config.environments = :all
+      config.background = false
     end
   end
 

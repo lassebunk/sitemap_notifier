@@ -73,6 +73,19 @@ module SitemapNotifier
                    # no Yahoo here, as they will be using Bing from september 15th, 2011
       end
       attr_writer :ping_urls
+
+      # Whether to run the notification pings in the background.
+      # Default: +true+
+      #
+      # Example:
+      #
+      #   SitemapNotifier::Notifier.background = false
+      #
+      def background
+        return @background if defined?(@background)
+        @background = true
+      end
+      attr_writer :background
       
       # Runs the search engine notifications after checking environment and delay.
       def run(url = nil)
@@ -88,18 +101,22 @@ module SitemapNotifier
 
       # Pings all the configured search engines with the supplied +url+.
       def ping_all(url)
-        Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
-        
-        escaped_url = escape_sitemap_url(url)
+        proc = Proc.new do
+          Rails.logger.info "Notifying search engines of changes to sitemap..." if defined?(Rails)
+          
+          escaped_url = escape_sitemap_url(url)
 
-        ping_urls.each do |url|
-          url.gsub! "%{sitemap_url}", escaped_url
-          if ping_url(url)
-            Rails.logger.info "#{ping_url} - ok" if defined?(Rails)
-          else
-            Rails.logger.info "#{ping_url} - failed" if defined?(Rails)
+          ping_urls.each do |url|
+            url.gsub! "%{sitemap_url}", escaped_url
+            if ping_url(url)
+              Rails.logger.info "#{url} - ok" if defined?(Rails)
+            else
+              Rails.logger.info "#{url} - failed" if defined?(Rails)
+            end
           end
         end
+
+        background ? Thread.new(&proc) : proc.call
       end
 
       # Yields a configuration block to configure the notifier.
@@ -118,7 +135,7 @@ module SitemapNotifier
 
       # For testing purposes. Resets all configuration and information about notified sitemaps.
       def reset
-        [:@sitemap_url, :@models, :@delay, :@environments, :@ping_urls, :@notified_urls].each do |var|
+        [:@sitemap_url, :@models, :@delay, :@environments, :@ping_urls, :@background, :@notified_urls].each do |var|
           remove_instance_variable var if instance_variable_defined?(var)
         end
       end
