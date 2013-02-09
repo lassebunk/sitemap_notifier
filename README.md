@@ -38,8 +38,14 @@ SitemapNotifier::Notifier.configure do |config|
   # see https://github.com/lassebunk/sitemap_notifier#per-model-sitemap-url
   config.sitemap_url = "http://example.com/sitemap.xml"
 
-  # Models that should trigger notification of search engines
+  # Models that should trigger notification of search engines.
+  # Default is on all creates, updates, and deletes.
   config.models = [Article, Category]
+
+  # If you want to specify when to notify search engines:
+  config.models = { Article => [:create, :destroy],
+                    Product => :update,
+                    Page => :all }
 
   # Enabled in which environments – default is [:production]
   config.environments = [:development, :production]

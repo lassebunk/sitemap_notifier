@@ -22,15 +22,32 @@ module SitemapNotifier
       #   end
       attr_accessor :sitemap_url
 
-      # Models that should trigger notification of search engines.
+      # Set models that should trigger notification.
+      #
+      # If you supply a hash, you can specify which actions should trigger notifications using +:create+, +:update+, +:destroy+, or +:all+.
+      #
+      # If you specify an array, all creates, updates, and deletes will trigger notification.
       #
       # Example:
       #
+      #   # Will trigger notifications on creates, updates, and destroys on articles and products:
       #   SitemapNotifier::Notifier.models = [Article, Product]
+      #
+      #   # Will trigger notifications on the specified actions:
+      #   config.models = { Article => [:create, :destroy],
+      #                     Product => :update,
+      #                     Page => :all }
       def models
-        @models ||= []
+        @models ||= {}
       end
-      attr_writer :models
+      
+      def models=(hash_or_array)
+        if hash_or_array.is_a?(Array)
+          @models = Hash[hash_or_array.map { |model| [model, :all] }]
+        else
+          @models = hash_or_array
+        end
+      end
       
       # Seconds to wait between notifications of the search engines.
       # Default: 10 minutes
@@ -177,8 +194,14 @@ module SitemapNotifier
       end
 
       # Returns +true+ if changes to the given model class should trigger notifications.
-      def notify_of_changes_to?(model)
-        models == :all || models.include?(model)
+      def notify_of_changes_to?(model, action)
+        return true if models == :all
+
+        valid_actions = models[model]
+        models == :all ||
+                  valid_actions == :all ||
+                  valid_actions == action ||
+                  (valid_actions.is_a?(Array) && valid_actions.include?(action))
       end
     end
   end
