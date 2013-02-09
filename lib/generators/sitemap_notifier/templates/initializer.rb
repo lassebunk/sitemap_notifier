@@ -5,8 +5,14 @@ SitemapNotifier::Notifier.configure do |config|
   # This can also be configured per model basis,
   # see https://github.com/lassebunk/sitemap_notifier#per-model-sitemap-url
 
-  # Models that should trigger notification of search engines
+  # Models that should trigger notification of search engines.
+  # It will trigger on creates, updates, and destroys af those models.
   #   config.models = [Article, Category]
+
+  # To trigger notifications on the specified actions:
+  #   config.models = { Article => [:create, :destroy],
+  #                     Product => :update,
+  #                     Page => :all }
 
   # Enabled in which environments – default is [:production]
   #   config.environments = [:development, :production]
