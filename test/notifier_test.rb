@@ -38,6 +38,44 @@ class NotifierTest < Test::Unit::TestCase
     end
   end
 
+  def test_per_model_action_settings
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = { Article => [:create, :destroy],
+                        Product => :update,
+                        Site => :all }
+    end
+
+    [[Article, :create, true],
+     [Article, :update, false],
+     [Article, :destroy, true],
+     [Product, :create, false],
+     [Product, :update, true],
+     [Product, :destroy, false],
+     [Site, :create, true],
+     [Site, :update, true],
+     [Site, :destroy, true]].each do |model, action, value|
+      assert_equal value, SitemapNotifier::Notifier.notify_of_changes_to?(model, action), "Expected value to be #{value} for #{action} on #{model}."
+    end
+  end
+
+  def test_models_without_action_settings
+    SitemapNotifier::Notifier.configure do |config|
+      config.models = [Article, Product]
+    end
+
+    [[Article, :create, true],
+     [Article, :update, true],
+     [Article, :destroy, true],
+     [Product, :create, true],
+     [Product, :update, true],
+     [Product, :destroy, true],
+     [Site, :create, false],
+     [Site, :update, false],
+     [Site, :destroy, false]].each do |model, action, value|
+      assert_equal value, SitemapNotifier::Notifier.notify_of_changes_to?(model, action), "Expected value to be #{value} for #{action} on #{model}."
+    end
+  end
+
   def test_waits_delay
     notifier = SitemapNotifier::Notifier
     notifier.configure do |config|
@@ -126,43 +164,5 @@ class NotifierTest < Test::Unit::TestCase
 
     2.times { Site.create! :has_sitemap => true }
     Site.create! :has_sitemap => false
-  end
-
-  def test_per_model_action_settings
-    SitemapNotifier::Notifier.configure do |config|
-      config.models = { Article => [:create, :destroy],
-                        Product => :update,
-                        Site => :all }
-    end
-
-    [[Article, :create, true],
-     [Article, :update, false],
-     [Article, :destroy, true],
-     [Product, :create, false],
-     [Product, :update, true],
-     [Product, :destroy, false],
-     [Site, :create, true],
-     [Site, :update, true],
-     [Site, :destroy, true]].each do |model, action, value|
-      assert_equal value, SitemapNotifier::Notifier.notify_of_changes_to?(model, action), "Expected value to be #{value} for #{action} on #{model}."
-    end
-  end
-
-  def test_models_without_action_settings
-    SitemapNotifier::Notifier.configure do |config|
-      config.models = [Article, Product]
-    end
-
-    [[Article, :create, true],
-     [Article, :update, true],
-     [Article, :destroy, true],
-     [Product, :create, true],
-     [Product, :update, true],
-     [Product, :destroy, true],
-     [Site, :create, false],
-     [Site, :update, false],
-     [Site, :destroy, false]].each do |model, action, value|
-      assert_equal value, SitemapNotifier::Notifier.notify_of_changes_to?(model, action), "Expected value to be #{value} for #{action} on #{model}."
-    end
   end
 end
