@@ -9,7 +9,7 @@ SitemapNotifier::Notifier.configure do |config|
   # It will trigger on creates, updates, and destroys af those models.
   #   config.models = [Article, Category]
 
-  # To trigger notifications on the specified actions:
+  # To trigger notifications on the specified actions only:
   #   config.models = { Article => [:create, :destroy],
   #                     Product => :update,
   #                     Page => :all }
