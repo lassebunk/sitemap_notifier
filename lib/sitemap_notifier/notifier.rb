@@ -26,7 +26,7 @@ module SitemapNotifier
       #
       # If you supply a hash, you can specify which actions should trigger notifications using +:create+, +:update+, +:destroy+, or +:all+.
       #
-      # If you specify an array, all creates, updates, and deletes will trigger notification.
+      # If you supply an array, all creates, updates, and deletes will trigger notification.
       #
       # Example:
       #
