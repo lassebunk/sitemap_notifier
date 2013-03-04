@@ -107,4 +107,9 @@ Documentation
 
 * [Complete documentation](http://rubydoc.info/github/lassebunk/sitemap_notifier)
 
+Versioning
+----------
+
+Follows [semantic versioning](http://semver.org/).
+
 Copyright &copy; 2010-2013 Lasse Bunk, released under the MIT license
